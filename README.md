@@ -1,5 +1,11 @@
 reference:
 
+https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/1.-xian-cheng-guan-li-managing-thread/zhuan-yi-xian-cheng-suo-you-quan
+
+http://wiki.jikexueyuan.com/project/cplusplus-concurrency-action/
+
+
+
 练习题  : https://www.cnblogs.com/geloutingyu/p/8513992.html
 
 https://www.acodersjourney.com/c11-multithreading-tutorial-via-faq-thread-management-basics/

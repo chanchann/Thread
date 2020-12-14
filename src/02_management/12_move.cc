@@ -8,8 +8,8 @@ TODO
 #include <thread>
 
 class A {
-std::thread t;
-    public:
+    std::thread t;
+public:
     A() noexcept = default;
     
     template<typename T, typename... Ts>
