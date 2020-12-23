@@ -2,8 +2,7 @@ reference:
 
 https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/1.-xian-cheng-guan-li-managing-thread/zhuan-yi-xian-cheng-suo-you-quan
 
-http://wiki.jikexueyuan.com/project/cplusplus-concurrency-action/
-
+https://www.bookstack.cn/read/Cpp_Concurrency_In_Action/content-chapter3-3.2-chinese.md
 
 
 练习题  : https://www.cnblogs.com/geloutingyu/p/8513992.html
