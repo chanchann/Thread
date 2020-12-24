@@ -11,9 +11,10 @@ https://blog.csdn.net/yamingwu/article/details/47860695
 
 #include <memory>
 #include <mutex>
- 
+#include <iostream>
+
 struct some_resource {
-    void do_something() {}
+    void do_something() { std::cout << "do something" << std::endl; }
 };
  
  
