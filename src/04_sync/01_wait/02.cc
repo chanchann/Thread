@@ -1,46 +1,57 @@
-/*
-当 std::condition_variable对象的某个wait 函数被调用的时候，它使用 std::unique_lock(通过 std::mutex) 来锁住当前线程。
-当前线程会一直被阻塞，直到另外一个线程在相同的 std::condition_variable 对象上调用了 notification 函数来唤醒当前线程。
+#include <iostream>
+#include <string>
+#include <thread>
+#include <list>
+#include <mutex>
+ #include <condition_variable>
 
-std::condition_variable 对象通常使用 std::unique_lock<std::mutex> 来等待，
-如果需要使用另外的 lockable 类型，可以使用std::condition_variable_any类
-
-*/
-
-#include <iostream>                // std::cout
-#include <thread>                // std::thread
-#include <mutex>                // std::mutex, std::unique_lock
-#include <condition_variable>    // std::condition_variable
-
-std::mutex mtx; // 全局互斥锁.
-std::condition_variable cv; // 全局条件变量.
-bool ready = false; // 全局标志位.
-
-void do_print_id(int id) {
-    std::unique_lock<std::mutex> lck(mtx);
-    while (!ready) // 如果标志位不为 true, 则等待...
-    cv.wait(lck); // 当前线程被阻塞, 当全局标志位变为 true 之后,
-    // 线程被唤醒, 继续往下执行打印线程编号id.
-    std::cout << "thread " << id << '\n';
-}
-
-void go() {
-    std::unique_lock <std::mutex> lck(mtx);
-    ready = true; // 设置全局标志位为 true.
-    cv.notify_all(); // 唤醒所有线程.
-}
-
+class MesProcess {
+public:
+	void Inmsglist() {
+		for (int i = 0; i < 10000; i++) {
+			std::unique_lock<std::mutex> uniqlock(my_mutex);
+			std::cout << "Inmsglist线程正在执行，插入数字为：" << i << std::endl;
+			msglist.push_back(i);
+			my_cond.notify_one();  //尝试把wait和线程唤醒，执行完这里wait就会被唤醒
+			//如果添加线程Outmsg_thread2则需要将此处更换为notify_all更稳定
+		}
+	}
+ 
+	
+	void Outmsglist() {
+		int command = 0;
+		while (true) {
+			std::unique_lock < std::mutex > uniqlock(my_mutex);
+			my_cond.wait(uniqlock, [this] {           //这里的判断条件为lambda表达式，判断信息队列是否为空，为空返回false，否则返回true
+				if (!msglist.empty())                 //调用wait函数
+					return true;
+				return false;
+			});
+			command = msglist.front();
+			msglist.pop_front();
+			std::cout << "Outmsglist线程"<<std::this_thread::get_id()<<"正在执行，取出数字为：" << command << std::endl;
+			uniqlock.unlock();
+			
+		}
+	}
+private:
+	std::list<int> msglist;
+	std::mutex my_mutex;
+	std::condition_variable my_cond;   //生成一个条件变量对象
+};
+ 
 int main() {
-    std::thread threads[10];
-    // spawn 10 threads:
-    for (int i = 0; i < 10; ++i)
-        threads[i] = std::thread(do_print_id, i);
-    
-    std::cout << "10 threads ready to race...\n";
-    go(); // go!
-
-    for (auto & th:threads)
-        th.join();
-
-    return 0;
+	std::cout << "主线程的线程id为： " << std::this_thread::get_id() << std::endl;
+ 
+	MesProcess mpobj;
+	std::thread Outmsg_thread(&MesProcess::Outmsglist, &mpobj);
+	//std::thread Outmsg_thread2(&MesProcess::Outmsglist, &mpobj);
+	std::thread Inmsg_thread(&MesProcess::Inmsglist, &mpobj);
+ 
+	Inmsg_thread.join();
+	Outmsg_thread.join();
+	//Outmsg_thread2.join();
+ 
+	std::cout << "主线程运行结束" << std::endl;
+	return 0;
 }

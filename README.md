@@ -17,3 +17,10 @@ https://www.cnblogs.com/haippy/p/3284540.html
 
 How to compile on Linux: g++ –std=c++11 sample.cpp -lpthread
 
+## 如何封装Thread
+
+https://www.zhihu.com/question/30553807
+
+- b站笔记
+
+https://blog.csdn.net/qq_38231713/category_10001159.html
