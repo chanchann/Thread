@@ -1,5 +1,7 @@
 /*
  join 与 detach 的 std::thread::id
+
+ TODO : 这里detach后
 */
 #include <iostream>
 #include <thread>

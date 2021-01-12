@@ -30,7 +30,7 @@ void worker_thread()
     std::cout << "Worker thread signals data processing completed\n";
  
     // 通知前完成手动解锁，以避免等待线程才被唤醒就阻塞（细节见 notify_one ）
-    lk.unlock();
+    lk.unlock();  // TODO: 此处存疑，真的如此吗
     cv.notify_one();
 }
  

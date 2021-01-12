@@ -28,7 +28,6 @@ bool list_contains(int value_to_find) {
         != some_list.end();
 }
 
-#include <iostream>
 
 int main() {
     add_to_list(42);

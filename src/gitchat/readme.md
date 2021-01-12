@@ -26,3 +26,12 @@ ps -efL | grep test
 
 ## TODO 多线程读写文件
 
+## std::condition_variable(), unlock mutex before notfifying waiting thread(s)?
+
+## What's the difference between notify_all() and notify_one() of std::condition_variable?
+
+https://stackoverflow.com/questions/9015748/whats-the-difference-between-notify-all-and-notify-one-of-stdcondition-va
+
+https://blog.csdn.net/brahmsjiang/article/details/102804756
+
+## 虚假唤醒

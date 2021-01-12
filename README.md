@@ -24,3 +24,9 @@ https://www.zhihu.com/question/30553807
 - b站笔记
 
 https://blog.csdn.net/qq_38231713/category_10001159.html
+
+## examples
+
+https://github.com/Thomas1995/multithreading-exercises
+
+https://github.com/dzui42unit/Cpp-and-Threads
